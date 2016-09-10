@@ -74,6 +74,7 @@ namespace Procedural_engines
         {
             if (oldThrust != thrust || oldfueltype != fueltype || oldignitions != ignitions || oldminthrottle != minthrottle)
             {
+                bool ullage = false;
                 int twr = 0;
                 int surfaceisp = 0;
                 int vacuumisp = 0;
@@ -83,6 +84,7 @@ namespace Procedural_engines
                 float fuel2ratio = 1;
                 if (fueltype == "Methalox")
                 {
+                    ullage = true;
                     twr = 150;
                     surfaceisp = 321;
                     vacuumisp = 363;
@@ -94,6 +96,7 @@ namespace Procedural_engines
                 }
                 else if (fueltype == "Kerlox")
                 {
+                    ullage = true;
                     twr = 150;
                     surfaceisp = 282;
                     vacuumisp = 311;
@@ -104,6 +107,7 @@ namespace Procedural_engines
                 }
                 else if (fueltype == "Hydrolox")
                 {
+                    ullage = true;
                     twr = 150;
                     surfaceisp = 391;
                     vacuumisp = 451;
@@ -114,6 +118,7 @@ namespace Procedural_engines
                 }
                 else if (fueltype == "Hydrazine")
                 {
+                    ullage = false;
                     twr = 1500;
                     surfaceisp = 240;
                     vacuumisp = 240;
@@ -128,6 +133,7 @@ namespace Procedural_engines
                 config.SetValue("minThrust", ((thrust / 1000)*(minthrottle/100)).ToString("0.0000"), true);
                 config.SetValue("ignitionThreshold", "0.1");
                 config.SetValue("ignitions", ignitions.ToString());
+                config.SetValue("ullage", ullage.ToString());
 
                 ConfigNode curve = new ConfigNode("atmosphereCurve");
                 FloatCurve newAtmoCurve = new FloatCurve();
