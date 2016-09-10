@@ -243,3 +243,16 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/Vectrosity.dll
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/UnityEngine.xml
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/UnityEngine.UI.dll
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/UnityEngine.dll
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/TrackIRUnity.dll
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/TDx.TDxInput.dll
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/SaveUpgradePipeline.Core.dll
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/Mono.Security.dll
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/Mono.Cecil.dll
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/KSPUtil.dll
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/KSPAssets.dll
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/Assembly-CSharp.dll
+/Kerbal Space Program/GameData/Proceduralengines/Plugins/Assembly-CSharp-firstpass.dll

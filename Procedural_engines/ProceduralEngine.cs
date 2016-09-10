@@ -44,7 +44,7 @@ namespace Procedural_engines
 
         #endregion
 
-        #region Thrust 
+        #region Stuff 
 
         [KSPField(isPersistant = true, guiName = "Thrust", guiActive = false, guiActiveEditor = true, guiFormat = "F3", guiUnits = "N"),
          UI_FloatEdit(scene = UI_Scene.Editor, minValue = 1f, maxValue = float.PositiveInfinity, incrementLarge = 1000000f, incrementSmall = 10000, incrementSlide = 1f, sigFigs = 3, unit = "N", useSI = true)]
