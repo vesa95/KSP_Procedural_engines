@@ -32,7 +32,7 @@ namespace Procedural_engines
 
         public float GetModuleCost(float defaultCost, ModifierStagingSituation sit)
         {
-            return thrust * 0.5f * costMultiplier;
+            return thrust * 2f * costMultiplier;
         }
 
         public ModifierChangeWhen GetModuleCostChangeWhen()
@@ -45,20 +45,20 @@ namespace Procedural_engines
         #endregion
 
         #region Stuff 
-
+        //settings
         [KSPField(isPersistant = true, guiName = "Thrust", guiActive = false, guiActiveEditor = true, guiFormat = "F3", guiUnits = "N"),
          UI_FloatEdit(scene = UI_Scene.Editor, minValue = 1f, maxValue = float.PositiveInfinity, incrementLarge = 1000000f, incrementSmall = 10000, incrementSlide = 1f, sigFigs = 3, unit = "N", useSI = true)]
         public float thrust = 2500;
         private float oldThrust = 0;
 
 
-        [KSPField(isPersistant = true, guiName = "Throttle", guiActive = false, guiActiveEditor = true, guiFormat = "F3", guiUnits = "%"),
+        [KSPField(isPersistant = true, guiName = "Min-Throttle", guiActive = false, guiActiveEditor = true, guiFormat = "F3", guiUnits = "%"),
          UI_FloatEdit(scene = UI_Scene.Editor, minValue = 1f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 1f, sigFigs = 3, unit = "", useSI = false)]
         public float minthrottle = 100;
         private float oldminthrottle = 0;
 
 
-        [KSPField(isPersistant = true, guiName = "ignitions", guiActive = false, guiActiveEditor = true, guiFormat = "F3", guiUnits = ""),
+        [KSPField(isPersistant = true, guiName = "ignitions", guiActive = false, guiActiveEditor = true, guiFormat = "F3", guiUnits = "Doesn't works"),
          UI_FloatEdit(scene = UI_Scene.Editor, minValue = 0f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 1f, sigFigs = 0, unit = "", useSI = false)]
         public float ignitions = 0;
         private float oldignitions = 0;
@@ -74,6 +74,8 @@ namespace Procedural_engines
         {
             if (oldThrust != thrust || oldfueltype != fueltype || oldignitions != ignitions || oldminthrottle != minthrottle)
             {
+                float realthrust = thrust / 1000;
+
                 bool ullage = false;
                 int twr = 0;
                 int surfaceisp = 0;
@@ -127,13 +129,17 @@ namespace Procedural_engines
                     fuel2 = null;
                     fuel2ratio = 0;
                 }
+
+                //TODO: change part model size by thrust
+                //TODO: different plumes for different fuels
                 ConfigNode config = new ConfigNode("ModuleEngines");
                 config.name = "ModuleEngines";
-                config.SetValue("maxThrust", (thrust / 1000).ToString("0.0000"), true);
-                config.SetValue("minThrust", ((thrust / 1000)*(minthrottle/100)).ToString("0.0000"), true);
-                config.SetValue("ignitionThreshold", "0.1");
-                config.SetValue("ignitions", ignitions.ToString());
-                config.SetValue("ullage", ullage.ToString());
+                config.SetValue("maxThrust", realthrust.ToString("0.0000"), true);
+                config.SetValue("minThrust", (realthrust*(minthrottle/100)).ToString("0.0000"), true);
+                config.SetValue("ignitionThreshold", "0.1");//doesn't work
+                config.SetValue("ignitions", ignitions.ToString());//doesn't work
+                config.SetValue("ullage", ullage.ToString());//doesn't work
+
 
                 ConfigNode curve = new ConfigNode("atmosphereCurve");
                 FloatCurve newAtmoCurve = new FloatCurve();
@@ -160,7 +166,8 @@ namespace Procedural_engines
                     config.AddNode(prop2);
                 }
                 part.Modules["ModuleEngines"].Load(config);
-                part.prefabMass = ((thrust/1000) / twr);
+                part.prefabMass = realthrust / twr;
+
                 oldThrust = thrust;
                 oldfueltype = fueltype;
                 oldignitions = ignitions;
