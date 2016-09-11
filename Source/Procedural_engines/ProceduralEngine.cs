@@ -8,8 +8,6 @@ namespace Procedural_engines
 {
     public class ProceduralEngine : PartModule
     {
-        static string[] enginelist = new string[5];
-
         #region callbacks
         public override void OnInitialize()
         {
@@ -130,6 +128,7 @@ namespace Procedural_engines
                     fuel2ratio = 0;
                 }
 
+                //TODO: Get the engine to shut down on 0% throttle
                 //TODO: change part model size by thrust
                 //TODO: different plumes for different fuels
                 ConfigNode config = new ConfigNode("ModuleEngines");
@@ -139,7 +138,6 @@ namespace Procedural_engines
                 config.SetValue("ignitionThreshold", "0.1");//doesn't work
                 config.SetValue("ignitions", ignitions.ToString());//doesn't work
                 config.SetValue("ullage", ullage.ToString());//doesn't work
-
 
                 ConfigNode curve = new ConfigNode("atmosphereCurve");
                 FloatCurve newAtmoCurve = new FloatCurve();
