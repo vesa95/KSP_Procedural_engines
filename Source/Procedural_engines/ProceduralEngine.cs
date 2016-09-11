@@ -8,8 +8,6 @@ namespace Procedural_engines
 {
     public class ProceduralEngine : PartModule
     {
-        static string[] enginelist = new string[5];
-
         #region callbacks
         public override void OnInitialize()
         {
@@ -26,13 +24,13 @@ namespace Procedural_engines
             UpdateConfiguration();
         }
         [KSPField]
-        public float costMultiplier = 1.0f;
+        public float costMultiplier = 2.0f;
 
         #region IPartCostModifier implementation
 
         public float GetModuleCost(float defaultCost, ModifierStagingSituation sit)
         {
-            return thrust * 2f * costMultiplier;
+            return thrust* 2f * costMultiplier;
         }
 
         public ModifierChangeWhen GetModuleCostChangeWhen()
@@ -45,20 +43,19 @@ namespace Procedural_engines
         #endregion
 
         #region Stuff 
-        //settings
         [KSPField(isPersistant = true, guiName = "Thrust", guiActive = false, guiActiveEditor = true, guiFormat = "F3", guiUnits = "N"),
          UI_FloatEdit(scene = UI_Scene.Editor, minValue = 1f, maxValue = float.PositiveInfinity, incrementLarge = 1000000f, incrementSmall = 10000, incrementSlide = 1f, sigFigs = 3, unit = "N", useSI = true)]
         public float thrust = 2500;
         private float oldThrust = 0;
 
 
-        [KSPField(isPersistant = true, guiName = "Min-Throttle", guiActive = false, guiActiveEditor = true, guiFormat = "F3", guiUnits = "%"),
+        [KSPField(isPersistant = true, guiName = "MinThrottle", guiActive = false, guiActiveEditor = true, guiFormat = "F3", guiUnits = "%"),
          UI_FloatEdit(scene = UI_Scene.Editor, minValue = 1f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 1f, sigFigs = 3, unit = "", useSI = false)]
         public float minthrottle = 100;
         private float oldminthrottle = 0;
 
 
-        [KSPField(isPersistant = true, guiName = "ignitions", guiActive = false, guiActiveEditor = true, guiFormat = "F3", guiUnits = "Doesn't works"),
+        [KSPField(isPersistant = true, guiName = "ignitions", guiActive = false, guiActiveEditor = true, guiFormat = "F3", guiUnits = ""),
          UI_FloatEdit(scene = UI_Scene.Editor, minValue = 0f, maxValue = 100f, incrementLarge = 10f, incrementSmall = 1f, incrementSlide = 1f, sigFigs = 0, unit = "", useSI = false)]
         public float ignitions = 0;
         private float oldignitions = 0;
@@ -130,6 +127,7 @@ namespace Procedural_engines
                     fuel2ratio = 0;
                 }
 
+                //TODO: Get the engine to shut down on 0% throttle
                 //TODO: change part model size by thrust
                 //TODO: different plumes for different fuels
                 ConfigNode config = new ConfigNode("ModuleEngines");
@@ -139,7 +137,6 @@ namespace Procedural_engines
                 config.SetValue("ignitionThreshold", "0.1");//doesn't work
                 config.SetValue("ignitions", ignitions.ToString());//doesn't work
                 config.SetValue("ullage", ullage.ToString());//doesn't work
-
 
                 ConfigNode curve = new ConfigNode("atmosphereCurve");
                 FloatCurve newAtmoCurve = new FloatCurve();
