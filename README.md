@@ -16,3 +16,5 @@ stuff to add in the future:
 scale engine size by thrust,
 plumes,
 part price
+
+lisence : CC-BY-SA
